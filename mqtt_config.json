@@ -1,8 +1,5 @@
-// MQTT Config
-
 {
-
-  "DEFAULT": {
+  "MQTT": {
     "HOST" : "www.test.com",
     "PORT" : 8883,
     "USER" : "test",
