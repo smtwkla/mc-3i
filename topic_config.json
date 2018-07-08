@@ -1,0 +1,7 @@
+{
+  "TOPIC1": {
+    "TOPIC" : "testTopic",
+    "TABLE" : "table1_iot",
+    "INSERT" : 1,
+  }
+}
