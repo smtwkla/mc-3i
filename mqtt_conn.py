@@ -2,6 +2,7 @@
 import paho.mqtt.client as mqtt
 import mqtt_config as mqtt_c
 import topic_config as topic_c
+import DBC as dbc
 
 #Load MQTT Server Config from JSON File
 conf=mqtt_c.read_mqtt_conf()
@@ -16,6 +17,12 @@ def on_connect(client, userdata, flags,rc):
 def on_message(client, userdata, msg):
 	print(msg.topic+" "+str(msg.payload))
 
+#Create Database Class
+db = dbc.DBConnector()
+
+#Connect to Database
+db.connect()
+
 #Load Topics List from JSON File
 topic=topic_c.read_topic_conf()
 
@@ -23,6 +30,7 @@ topic=topic_c.read_topic_conf()
 for a in topic.items():
     print "Topic: "
     print a[1]['TOPIC']
+
 
 #MQTT paho Client
 client = mqtt.Client()
