@@ -1,2 +1,4 @@
 *.json
 
+db_config.json
+*.json
