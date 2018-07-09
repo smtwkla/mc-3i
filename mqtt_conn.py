@@ -41,7 +41,8 @@ print str(len(RuleList)) + " topic rules added."
 
 #MQTT paho Client
 client = mqtt.Client()
-#client.username_pw_set(conf['mqtt_username'],conf['mqtt_password'])
+if conf['mqtt_username'] != ""
+    client.username_pw_set(conf['mqtt_username'],conf['mqtt_password'])
 client.on_connect = on_connect
 client.on_message = on_message
 
