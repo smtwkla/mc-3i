@@ -9,8 +9,9 @@ class Rule(object):
     def getTopic(self):
         return self.topic
 
-    def message_in(self):
+    def message_in(self, msg):
         #Process incomming MQTT Message
+        print("Message arrived to Rule " + self.name + " : " + msg.topic+" "+str(msg.payload))
         return True
 
     # When message arrives, parse it, INSERT or UPDATE to table

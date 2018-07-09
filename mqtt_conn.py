@@ -4,21 +4,13 @@ import mqtt_config as mqtt_c
 import topic_config as topic_c
 import DBC as dbc
 import Rule as RuleClass
+import mqtt_handler
 
 #Load MQTT Server Config from JSON File
 conf=mqtt_c.read_mqtt_conf()
 
 print "MQTT Server Config:"
 print conf['mqtt_host'] + ":" + str(conf['mqtt_port']) + " " +  conf['mqtt_username'] + " " + conf['mqtt_password']
-
-def on_connect(client, userdata, flags,rc):
-    print("Connected with result code "+str(rc))
-# Subscribe to all rule topics defined in RuleList
-    for aRule in RuleList:
-        client.subscribe(aRule.getTopic())
-
-def on_message(client, userdata, msg):
-    print(msg.topic+" "+str(msg.payload))
 
 #Create Database Class
 db = dbc.DBConnector()
@@ -33,18 +25,22 @@ RuleList=[]
 
 #Parse Topics to be subscribed to from JSON File and add it to RuleList[]
 for aTopic in topic.items():
-    r=RuleClass.Rule(db,name=aTopic[0], topic=aTopic[1]['TOPIC'], tablename=aTopic[1]['TABLE'], insert=aTopic[1]['INSERT'])
+    r=RuleClass.Rule(db, name=aTopic[0], topic=aTopic[1]['TOPIC'],
+                        tablename=aTopic[1]['TABLE'], insert=aTopic[1]['INSERT'])
     RuleList.append(r)
 
 
 print str(len(RuleList)) + " topic rules added."
 
+mq=mqtt_handler.mqtt_handler()
+mq.setRuleList(RuleList)
+
 #MQTT paho Client
 client = mqtt.Client()
 if conf['mqtt_username'] != '':
     client.username_pw_set(conf['mqtt_username'],conf['mqtt_password'])
-client.on_connect = on_connect
-client.on_message = on_message
+client.on_connect = mq.on_connect
+client.on_message = mq.on_message
 
 #Connect to MQTT Server
 client.connect(conf['mqtt_host'], conf['mqtt_port'], 60)
