@@ -1,3 +1,5 @@
+import paho.mqtt.client as mqtt
+
 class mqtt_handler(object):
     def __init__(self):
         super(mqtt_handler, self).__init__()
@@ -17,6 +19,7 @@ class mqtt_handler(object):
 
         #Loop through RuleList and find if message topic applies
         for aRule in self.RuleList:
-            if (msg.topic==aRule.getTopic()):
+            if (mqtt.topic_matches_sub(aRule.getTopic(), msg.topic)):
                 aRule.message_in(msg=msg)
+                #print msg.payload
         #Call RuleList message_in method
