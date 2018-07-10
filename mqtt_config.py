@@ -1,7 +1,8 @@
 import json
+from os import path
 
 def read_mqtt_conf():
-    with open('mqtt_config.json', 'r') as s:
+    with open(path.relpath('conf/mqtt_config.json'), 'r') as s:
         config = json.load(s)
 
     mqtt_host = config['MQTT']['HOST']

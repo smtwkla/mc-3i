@@ -1,8 +1,9 @@
 import json
+from os import path
 import  pymysql.cursors
 
 def read_db_conf():
-    with open('db_config.json', 'r') as s:
+    with open(path.relpath('conf/db_config.json'), 'r') as s:
         config = json.load(s)
     return config
 
