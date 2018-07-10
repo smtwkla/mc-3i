@@ -1,0 +1,8 @@
+{
+  "MQTT": {
+    "HOST" : "test.mosquitto.org",
+    "PORT" : 1883,
+    "USER" : "",
+    "PASS" : "test"
+  }
+}

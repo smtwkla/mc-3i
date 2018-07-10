@@ -1,0 +1,9 @@
+{
+  "DB": {
+    "HOST" : "test.mysql.com",
+    "PORT" : 0,
+    "USER" : "mysql",
+    "PASS" : "mysql",
+    "DB"   : "iotdata"
+  }
+}
