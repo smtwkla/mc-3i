@@ -16,7 +16,7 @@ Rule Name, MQTT Topic to subscribe, MySQL table name to Save data, Operation: IN
 
 ## Configuration:
 
-All config information is stored in .json files in JSON format.
+All config information is stored in .json files in JSON format in the conf folder. Rename the .json.sample files as .json files and make changes as necessary.
 
 ### MQTT Server Config:
 
