@@ -7,8 +7,8 @@
 
 ## Requirements:
 
-paho - Python MQTT Client library
-PyMySQL - Python MySQL Client library
+*   paho - Python MQTT Client library
+*   PyMySQL - Python MySQL Client library
 
 ## MQTT Message Listener Processing Rules
 
@@ -24,7 +24,7 @@ Settings saved in mqtt_config.json file are : MQTT Host Name, Port, Username, Pa
 
 ### Database Server Config:
 
-db_config.json conntains the following settings for the MySQL server ti connect to: Host, Port, Username, password, DB name
+db_config.json conntains the following settings for the MySQL server to connect to: Host, Port, Username, password, DB name
 
 ### Rule Config:
 
