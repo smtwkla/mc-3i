@@ -14,19 +14,19 @@ PyMySQL - Python MySQL Client library
 
 Rule Name, MQTT Topic to subscribe, MySQL table name to Save data, Operation: INSERT / UPDATE, key field for update
 
-##Configuration:
+## Configuration:
 
 All config information is stored in .json files in JSON format.
 
-###MQTT Server Config:
+### MQTT Server Config:
 
 Settings saved in mqtt_config.json file are : MQTT Host Name, Port, Username, Password
 
-###Database Server Config:
+### Database Server Config:
 
 db_config.json conntains the following settings for the MySQL server ti connect to: Host, Port, Username, password, DB name
 
-###Rule Config:
+### Rule Config:
 
 topic_config.json file contains rule definitions. Example config below:
 
