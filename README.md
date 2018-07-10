@@ -30,20 +30,20 @@ db_config.json conntains the following settings for the MySQL server ti connect 
 
 topic_config.json file contains rule definitions. Example config below:
 
-{
-  "TOPIC1": {
-    "TOPIC" : "testTopic/#",
-    "TABLE" : "test1",
-    "INSERT" : 1
-  },
-  "TOPIC2": {
-    "TOPIC" : "testTopic2",
-    "TABLE" : "test2",
-    "INSERT" : 1
-  },
-  "TOPIC3": {
-    "TOPIC" : "testTopic3",
-    "TABLE" : "test3",
-    "INSERT" : 1
-  }
-}
+    {
+      "TOPIC1": {
+        "TOPIC" : "testTopic/#",
+        "TABLE" : "test1",
+        "INSERT" : 1
+      },
+      "TOPIC2": {
+        "TOPIC" : "testTopic2",
+        "TABLE" : "test2",
+        "INSERT" : 1
+      },
+      "TOPIC3": {
+        "TOPIC" : "testTopic3",
+        "TABLE" : "test3",
+        "INSERT" : 1
+      }
+    }
