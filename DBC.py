@@ -43,7 +43,7 @@ class DBConnector(object):
         for aField in record.keys():
             sField += "" + aField + ","
             v = record[aField]
-            if isinstance(v, (basestring,str,unicode)):
+            if isinstance(v, (str,unicode)):
                 sVal += "'" + v + "',"
                 sRef += "%(" + aField + ")s,"
             elif isinstance(v, int):
