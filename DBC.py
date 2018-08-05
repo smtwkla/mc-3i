@@ -21,7 +21,7 @@ class DBConnector(object):
         self.connection= None
 
     def connect(self):
-        print "Connecting to database " + self.db_host + ":" + str(self.db_port)
+        print("Connecting to database " + self.db_host + ":" + str(self.db_port))
         # Connect to the database
         self.connection = pymysql.connect(host=self.db_host,
                                      user=self.db_user,
