@@ -12,6 +12,7 @@
   "TOPIC3": {
     "TOPIC" : "testTopic3",
     "TABLE" : "test3",
-    "INSERT" : 1
+    "INSERT" : 1,
+    "NOTIFY" : "PK1"
   }
 }
