@@ -62,7 +62,7 @@ class DBConnector(object):
             field = filter_field_name(aField)  # Filter Field name of suspicious characters
 
             if field != aField:
-                # Field name in JSON message contains illegal characters.
+                # Field name in record contains illegal characters.
                 print("Field name contains illegal characters: ", aField)
                 return False    # Terminate action
 
