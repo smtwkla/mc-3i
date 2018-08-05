@@ -9,8 +9,8 @@ import mqtt_handler
 #Load MQTT Server Config from JSON File
 conf=mqtt_c.read_mqtt_conf()
 
-print "MQTT Server Config:"
-print conf['mqtt_host'] + ":" + str(conf['mqtt_port']) + " " +  conf['mqtt_username'] + " " + conf['mqtt_password']
+print("MQTT Server Config:")
+print(conf['mqtt_host'] + ":" + str(conf['mqtt_port']) + " " +  conf['mqtt_username'] + " " + conf['mqtt_password'])
 
 #Create Database Class
 db = dbc.DBConnector()
