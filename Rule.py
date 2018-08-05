@@ -17,9 +17,10 @@ class Rule(object):
         print("Message arrived to Rule " + self.name + " : " + msg.topic + " " + str(msg.payload))
 
         # decode JSON payload
+        pl=msg.payload.decode("utf-8")
         print("Payload:  ")
-        print(msg.payload.decode("utf-8"))
-        jss = js.loads(msg.payload)
+        print(pl)
+        jss = js.loads(pl)
         print(jss)
 
         if self.insert:
