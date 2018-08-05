@@ -1,12 +1,24 @@
 import json
 from os import path
 import pymysql.cursors
-
+import string
 
 def read_db_conf():
     with open(path.relpath('conf/db_config.json'), 'r') as s:
         config = json.load(s)
     return config
+
+
+def filter_field_name(fn):
+    valid_chars = "_%s%s" % (string.ascii_letters, string.digits)
+
+    fn = str(fn).strip()
+    ffn = ""
+    for ch in fn:
+        if ch in valid_chars:
+            ffn += ch
+    print("Filtered %s to %s" % (fn, ffn))
+    return ffn
 
 
 class DBConnector(object):
@@ -41,27 +53,35 @@ class DBConnector(object):
         sVal = ""
         sRef = ""
         for aField in record.keys():
-            sField += "" + aField + ","
+            field = filter_field_name(aField)    # Filter Field name of suspicious characters
+            if field != aField :
+                print("Field name contains illegal characters: ", aField)
+                return False
+            sField += "" + field + ","
             v = record[aField]
             if isinstance(v, str):
-                sVal += "'" + v + "',"
                 sRef += "%(" + aField + ")s,"
             elif isinstance(v, int):
                 sRef += "%(" + aField + ")s,"
             elif isinstance(v, float):
                 sRef += "%(" + aField + ")s,"
 
-        sField = sField[:-1]
-        sVal = sVal[:-1]
+        sField = sField[:-1]  # Remove the extra ,
         sRef = sRef[:-1]
 
         # Create a new record
         sql = "INSERT INTO " + table + " (" + sField + ") VALUES (" + sRef + ")"
         print(sql)
+
         with self.connection.cursor() as cursor:
-            cursor.execute(sql, record)
-        self.connection.commit()
-        return True
+            try:
+                cursor.execute(sql, record)
+                self.connection.commit()
+            except (pymysql.err.InternalError,  pymysql.err.ProgrammingError) as er:
+                print("Error: {0}".format(er))
+                return False
+            else:
+                return True
 
     def update(self, table, record, id_field):
         # id_val = record[id_field]
