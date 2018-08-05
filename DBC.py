@@ -3,21 +3,26 @@ from os import path
 import pymysql.cursors
 import string
 
+
 def read_db_conf():
     with open(path.relpath('conf/db_config.json'), 'r') as s:
-        config = json.load(s)
+        config = json.load(s)       # Read JSON String from config file
     return config
 
 
 def filter_field_name(fn):
+    # Strip illegal characters from passed string
     valid_chars = "_%s%s" % (string.ascii_letters, string.digits)
 
-    fn = str(fn).strip()
+    fn = str(fn).strip()    # Strip extra spaces
     ffn = ""
+
     for ch in fn:
         if ch in valid_chars:
             ffn += ch
-    print("Filtered %s to %s" % (fn, ffn))
+
+    # print("Filtered %s to %s" % (fn, ffn)) # Debug output
+
     return ffn
 
 
@@ -53,12 +58,17 @@ class DBConnector(object):
         sVal = ""
         sRef = ""
         for aField in record.keys():
-            field = filter_field_name(aField)    # Filter Field name of suspicious characters
-            if field != aField :
+
+            field = filter_field_name(aField)  # Filter Field name of suspicious characters
+
+            if field != aField:
+                # Field name in JSON message contains illegal characters.
                 print("Field name contains illegal characters: ", aField)
-                return False
+                return False    # Terminate action
+
             sField += "" + field + ","
             v = record[aField]
+
             if isinstance(v, str):
                 sRef += "%(" + aField + ")s,"
             elif isinstance(v, int):
@@ -71,15 +81,17 @@ class DBConnector(object):
 
         # Create a new record
         sql = "INSERT INTO " + table + " (" + sField + ") VALUES (" + sRef + ")"
-        print(sql)
+        print(sql)  # Debug output
 
         with self.connection.cursor() as cursor:
             try:
                 cursor.execute(sql, record)
                 self.connection.commit()
-            except (pymysql.err.InternalError,  pymysql.err.ProgrammingError) as er:
+
+            except (pymysql.err.InternalError, pymysql.err.ProgrammingError) as er:
                 print("Error: {0}".format(er))
                 return False
+
             else:
                 return True
 
