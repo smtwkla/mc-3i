@@ -18,7 +18,7 @@ class Rule(object):
 
         # decode JSON payload
         print("Payload:  ")
-        print( msg.payload)
+        print(msg.payload.decode("utf-8"))
         jss = js.loads(msg.payload)
         print(jss)
 
