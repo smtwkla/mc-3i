@@ -13,11 +13,12 @@ class Rule(object):
         return self.topic
 
     def message_in(self, msg):
-        # Process incomming MQTT Message
+        # Process incoming MQTT Message
         print("Message arrived to Rule " + self.name + " : " + msg.topic + " " + str(msg.payload))
 
         # decode JSON payload
-        print("Payload:  " + msg.payload)
+        print("Payload:  ")
+        print( msg.payload)
         jss = js.loads(msg.payload)
         print(jss)
 
