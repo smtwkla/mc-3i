@@ -55,7 +55,7 @@ class DBConnector(object):
 
         # Create a new record
         sql = "INSERT INTO " + table + " (" + sField + ") VALUES (" + sRef + ")"
-        print sql
+        print (sql)
         with self.connection.cursor() as cursor:
             cursor.execute(sql, record)
         self.connection.commit()
