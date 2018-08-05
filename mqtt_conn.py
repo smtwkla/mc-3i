@@ -30,7 +30,7 @@ for aTopic in topic.items():
     RuleList.append(r)
 
 
-print str(len(RuleList)) + " topic rules added."
+print (str(len(RuleList)) + " topic rules added.")
 
 mq=mqtt_handler.mqtt_handler()
 mq.setRuleList(RuleList)
