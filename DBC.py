@@ -95,7 +95,57 @@ class DBConnector(object):
             else:
                 return True
 
-    def update(self, table, record, id_field):
-        # id_val = record[id_field]
-        # sql = "UPDATE " + table + " SET " + sFieldVal + " WHERE " + id_field + "=" + id_val
-        return True
+    def update(self, table, record, condition):
+
+        sField = ""
+
+        for aField in record.keys():
+            field = filter_field_name(aField)  # Filter Field name of suspicious characters
+
+            if field != aField or field == "":
+                # Field name in record contains illegal characters.
+                print("Field name contains illegal characters %s or is empty." % aField)
+                return False  # Terminate action
+
+            sField += "" + field + "="
+            v = record[aField]
+
+            if isinstance(v, str):
+                sField += "%(" + aField + ")s,"
+            elif isinstance(v, int):
+                sField += "%(" + aField + ")s,"
+            elif isinstance(v, float):
+                sField += "%(" + aField + ")s,"
+
+        sField = sField[:-1]  # Remove the extra ,
+        sql = "UPDATE " + table + " SET " + sField + " WHERE " + condition
+        print(sql)
+
+        with self.connection.cursor() as cursor:
+            try:
+                cursor.execute(sql, record)
+                self.connection.commit()
+
+            except (pymysql.err.InternalError, pymysql.err.ProgrammingError) as er:
+                print("Error: {0}".format(er))
+                return False
+
+            else:
+                return True
+
+    def delete(self, table, condition):
+
+        sql = "DELETE FROM " + table + " WHERE " + condition
+        print(sql)
+
+        with self.connection.cursor() as cursor:
+            try:
+                cursor.execute(sql)
+                self.connection.commit()
+
+            except (pymysql.err.InternalError, pymysql.err.ProgrammingError) as er:
+                print("Error: {0}".format(er))
+                return False
+
+            else:
+                return True

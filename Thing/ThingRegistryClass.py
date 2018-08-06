@@ -4,9 +4,8 @@ import Thing
 class ThingRegistryClass:
     """ Base Class for Things Registry"""
 
-    def __init__(self, dbc, mqtt):
-        self.DBC = dbc
-        self.MQTT = mqtt
+    def __init__(self, env):
+        self.env = env
         self.Things = []  # Things List
 
     def load_things(self, thingslist):
@@ -19,13 +18,13 @@ class ThingRegistryClass:
             obj = None
 
             if thing_class == "APK_ThingClass":
-                obj = Thing.APK_ThingClass(tid, self)
+                obj = Thing.APK_ThingClass(tid, self.env)
 
             elif thing_class == "SAPK_ThingClass":
-                obj = Thing.ThingClass(tid, self)
+                obj = Thing.ThingClass(tid, self.env)
 
             elif thing_class == "ThingClass":
-                obj = Thing.ThingClass(tid, self)
+                obj = Thing.ThingClass(tid, self.env)
 
             if obj is None:
                 print("Error : Unknown Class %s." % thing_class)

@@ -22,7 +22,7 @@ class WriteTableActionClass(Actions.RuleActionClass):
             self.env.dbc.insert(self.tablename, jss)
 
         else:
-            # UPDATE SQL Statement
+            # UPDATE SQL Statement - NOT YET IMPLEMENTED
             self.env.dbc.update()
         # UPDATE TableTouchCount
 

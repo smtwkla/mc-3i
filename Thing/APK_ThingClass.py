@@ -2,16 +2,17 @@ import Thing
 
 
 class APK_ThingClass(Thing.ThingClass):
-    """ Base Class for Things"""
+    """ Machine Specific Thing Class for Automatic Packing Machine """
 
-    def __init__(self, TID, tr):
-        Thing.ThingClass.__init__(self, TID, tr)
+    def __init__(self, TID, env):
+        Thing.ThingClass.__init__(self, TID, env)
         return
 
     def get_topics(self):
-        return
+        t = self.get_tid()
+        return t
 
-    def on_message(self):
+    def on_message(self, msg):
         return
 
     def process(self):
