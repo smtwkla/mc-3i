@@ -32,7 +32,7 @@ class MQTTHandlerClass(object):
 
     def on_message(self, client, userdata, msg):
         # Find correct rule from RuleList
-        # Pass message JSON Payload to Rule for writing to correct table
+        # Pass message JSON Payload to Rule for action
 
         # Loop through RuleList and find if message topic applies
         for aRule in self.RuleList:

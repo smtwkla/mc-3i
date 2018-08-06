@@ -1,4 +1,5 @@
 
+
 class ThingClass:
     """ Base Class for Things"""
 
@@ -14,7 +15,8 @@ class ThingClass:
     def get_topics(self):
         return
 
-    def on_message(self):
+    def on_message(self, msg):
+
         return
 
     def process(self):

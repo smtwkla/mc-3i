@@ -1,13 +1,10 @@
-import json as js
 
 
 class Rule(object):
-    def __init__(self, dbc, name, topic, tablename, insert):
+    def __init__(self, name, topic, rule_action):
         self.name = name
-        self.dbc = dbc
         self.topic = topic
-        self.tablename = tablename
-        self.insert = insert
+        self.rule_action = rule_action
 
     def getTopic(self):
         return self.topic
@@ -15,22 +12,7 @@ class Rule(object):
     def message_in(self, msg):
         # Process incoming MQTT Message
         print("Message arrived to Rule " + self.name + " : " + msg.topic + " " + str(msg.payload))
-
-        # decode JSON payload
-        pl=msg.payload.decode("utf-8")
-        print("Payload:  ")
-        print(pl)
-        jss = js.loads(pl)
-        print(jss)
-
-        if self.insert:
-            # INSERT SQL Statement
-            self.dbc.insert(self.tablename, jss)
-        else:
-            # UPDATE SQL Statement
-            self.dbc.update()
-
-        # UPDATE TableTouchCount
+        self.rule_action.on_message(msg)
         return True
 
-    # When message arrives, parse it, INSERT or UPDATE to table
+
