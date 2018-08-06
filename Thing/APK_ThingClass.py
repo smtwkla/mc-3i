@@ -1,11 +1,11 @@
-from Thing import ThingClass as Tc
+import Thing
 
 
-class APK_ThingClass(Tc.ThingClass):
+class APK_ThingClass(Thing.ThingClass):
     """ Base Class for Things"""
 
     def __init__(self, TID, tr):
-        Tc.ThingClass.__init__(self, TID, tr)
+        Thing.ThingClass.__init__(self, TID, tr)
         return
 
     def get_topics(self):

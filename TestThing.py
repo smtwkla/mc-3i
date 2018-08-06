@@ -2,10 +2,10 @@
 #tc = t.ThingClass("LF1", None, None)
 #print(tc.get_tid())
 
-from Thing import ThingRegistryClass as trc
+import Thing
 import mqtt_config as mqtt_c
 
-tr = trc.ThingRegistryClass(None, None)
+tr = Thing.ThingRegistryClass(None, None)
 conf = mqtt_c.read_things_conf()
 tr.load_things(conf)
 

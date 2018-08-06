@@ -1,5 +1,5 @@
-from Thing import ThingClass as Tc
-from Thing import APK_ThingClass as APKc
+import Thing
+
 
 class ThingRegistryClass:
     """ Base Class for Things Registry"""
@@ -19,13 +19,13 @@ class ThingRegistryClass:
             obj = None
 
             if thing_class == "APK_ThingClass":
-                obj = APKc.APK_ThingClass(tid, self)
+                obj = Thing.APK_ThingClass(tid, self)
 
             elif thing_class == "SAPK_ThingClass":
-                obj = Tc.ThingClass(tid, self)
+                obj = Thing.ThingClass(tid, self)
 
             elif thing_class == "ThingClass":
-                obj = Tc.ThingClass(tid, self)
+                obj = Thing.ThingClass(tid, self)
 
             if obj is None:
                 print("Error : Unknown Class %s." % thing_class)
