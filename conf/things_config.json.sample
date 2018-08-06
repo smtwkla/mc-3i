@@ -1,0 +1,16 @@
+{
+  "PK1": {
+    "CLASS" : "APK_ThingClass",
+    "DESC" : "Automatic Packing Machine 1"
+  },
+
+  "PK2": {
+    "CLASS" : "SAPK_ThingClass",
+    "DESC" : "Semi-Automatic Packing Machine 2",
+  },
+
+  "WT1": {
+    "TOPIC" : "ThingClass",
+    "DESC" : "Water Tank 1"  },
+  }
+}

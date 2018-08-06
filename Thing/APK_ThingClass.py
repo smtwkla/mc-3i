@@ -1,15 +1,12 @@
+from Thing import ThingClass as Tc
 
-class ThingClass:
+
+class APK_ThingClass(Tc.ThingClass):
     """ Base Class for Things"""
 
     def __init__(self, TID, tr):
-        self.__TID = TID
-        self.TR = tr
-        self.DBC = tr.DBC
-        self.MQTT = tr.MQTT
-
-    def get_tid(self):
-        return self.__TID
+        Tc.ThingClass.__init__(self, TID, tr)
+        return
 
     def get_topics(self):
         return

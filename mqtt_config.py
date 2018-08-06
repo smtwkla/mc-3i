@@ -12,3 +12,10 @@ def read_mqtt_conf():
     mqtt_password = config['MQTT']['PASS']
     return {'mqtt_host': mqtt_host, 'mqtt_port': mqtt_port, 'mqtt_username': mqtt_username,
             'mqtt_password': mqtt_password}
+
+
+def read_things_conf():
+    with open(path.relpath('conf/things_config.json'), 'r') as s:
+        config = json.load(s)
+
+    return config
