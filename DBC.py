@@ -61,9 +61,9 @@ class DBConnector(object):
 
             field = filter_field_name(aField)  # Filter Field name of suspicious characters
 
-            if field != aField:
+            if field != aField or field == "":
                 # Field name in record contains illegal characters.
-                print("Field name contains illegal characters: ", aField)
+                print("Field name contains illegal characters %s or is empty." % aField)
                 return False    # Terminate action
 
             sField += "" + field + ","
