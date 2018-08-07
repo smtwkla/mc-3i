@@ -126,7 +126,7 @@ class DBConnector(object):
                 cursor.execute(sql, record)
                 self.connection.commit()
 
-            except (pymysql.err.InternalError, pymysql.err.ProgrammingError) as er:
+            except pymysql.err.Error as er:
                 print("Error: {0}".format(er))
                 return False
 
@@ -143,9 +143,31 @@ class DBConnector(object):
                 cursor.execute(sql)
                 self.connection.commit()
 
-            except (pymysql.err.InternalError, pymysql.err.ProgrammingError) as er:
+            except pymysql.err.Error as er:
                 print("Error: {0}".format(er))
                 return False
 
             else:
                 return True
+
+    def select(self, table, fields, condition=None, order_by=None, group_by=None, limit=None):
+
+        sql = "SELECT " + fields + " FROM " + table
+        if condition is not None:
+            sql += " WHERE " + condition
+        if order_by is not None:
+            sql += " ORDER BY " + order_by
+        if group_by is not None:
+            sql += " GROUP BY " + group_by
+        if limit is not None:
+            sql += " LIMIT " + limit
+
+        print(sql)
+
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute(sql)
+            return cursor
+        except pymysql.err.Error as er:
+            print("Error: {0}".format(er))
+            return None

@@ -4,5 +4,9 @@
     "PORT" : 1883,
     "USER" : "",
     "PASS" : "test"
+  },
+
+  "IOT_SITE": {
+    "TOPIC_ROOT" : "SMTW/"
   }
 }

@@ -9,7 +9,7 @@ class APK_ThingClass(Thing.ThingClass):
         return
 
     def get_topics(self):
-        t = self.get_tid()
+        t = self.env.topic_root + self.get_tid()
         return t
 
     def on_message(self, msg):

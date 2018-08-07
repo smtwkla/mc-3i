@@ -13,4 +13,12 @@ d.connect()
 #d.update(t,rec,condition)
 
 delcond = "ISNULL(id)"
-d.delete(t,"asd=1")
+#d.delete(t,"asd=1")
+
+fld = "id, name, count"
+where = "name='APK-2'"
+grp = "id"
+ord = "id"
+c = d.select(t,fld, condition=where, group_by=None, limit="10")
+r=c.fetchall()
+print(r)

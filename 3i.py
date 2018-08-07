@@ -14,12 +14,20 @@ Env3i.dbc = dbc.DBConnector()
 # Connect to Database
 Env3i.dbc.connect()
 
+# Load MQTT Server Config from JSON File
+m_conf = read_c.read_mqtt_conf()
+
+print("MQTT Server Config:")
+print(m_conf['mqtt_host'] + ":" + str(m_conf['mqtt_port']) + " " + m_conf['mqtt_username'] + " " + m_conf['mqtt_password'] + " " + m_conf['topic_root'])
+
+Env3i.topic_root = m_conf['topic_root']
+
 # Load Topics List from JSON File
 topic = read_c.read_topic_conf()
 
 Env3i.rules = []
 
-# Parse Topics to be subscribed to from JSON File and add it to RuleList[]
+# Parse Direct Table Write Action Topics to be subscribed to from JSON File and add it to RuleList[]
 for aTopic in topic.items():
     w = Actions.WriteTableActionClass(Env3i, aTopic[1]['INSERT'], aTopic[1]['TABLE'])
     r = RuleClass.Rule(name=aTopic[0], topic=aTopic[1]['TOPIC'], rule_action=w)
@@ -44,15 +52,10 @@ for th in Env3i.tr.Things:
 
 print(str(len(Env3i.rules)) + " topic rules added.")
 
-# Load MQTT Server Config from JSON File
-conf = read_c.read_mqtt_conf()
-
-print("MQTT Server Config:")
-print(conf['mqtt_host'] + ":" + str(conf['mqtt_port']) + " " + conf['mqtt_username'] + " " + conf['mqtt_password'])
 
 Env3i.mqtt = MQTTHandlerClass.MQTTHandlerClass()
 Env3i.mqtt.setRuleList(Env3i.rules)
-Env3i.mqtt.connect_to_server(conf)
+Env3i.mqtt.connect_to_server(m_conf)
 Env3i.mqtt.client.loop_forever()
 
 
