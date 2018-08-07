@@ -13,6 +13,8 @@ class APK_ThingClass(Thing.ThingClass):
         return t
 
     def on_message(self, msg):
+        pl = msg.payload.decode("utf-8")
+        print("Automatic Packing Machine " + self.get_tid() + " sent message: " + pl)
         return
 
     def process(self):

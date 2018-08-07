@@ -29,9 +29,12 @@ Env3i.rules = []
 
 # Parse Direct Table Write Action Topics to be subscribed to from JSON File and add it to RuleList[]
 for aTopic in topic.items():
-    w = Actions.WriteTableActionClass(Env3i, aTopic[1]['INSERT'], aTopic[1]['TABLE'])
-    r = RuleClass.Rule(name=aTopic[0], topic=aTopic[1]['TOPIC'], rule_action=w)
-    Env3i.rules.append(r)
+    if aTopic[0] == "//":
+        pass  # Ignore comment in JSON file
+    else:
+        w = Actions.WriteTableActionClass(Env3i, aTopic[1]['INSERT'], aTopic[1]['TABLE'])
+        r = RuleClass.Rule(name=aTopic[0], topic=aTopic[1]['TOPIC'], rule_action=w)
+        Env3i.rules.append(r)
 
 # Load Things
 
