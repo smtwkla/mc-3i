@@ -6,7 +6,7 @@ class ThingRegistryClass:
 
     def __init__(self, env):
         self.env = env
-        self.Things = []  # Things List
+        self.Things = {}  # Things List
 
     def load_things(self, thingslist):
         for thing in thingslist.items():
@@ -31,6 +31,10 @@ class ThingRegistryClass:
 
             else:
                 # Append Thing to Things list
-                self.Things.append(obj)
+                self.Things[tid] = obj
 
         return
+
+    def get_thing(self, id):
+        #  Find Thing Object
+        pass

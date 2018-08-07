@@ -43,14 +43,15 @@ conf = read_c.read_things_conf()
 Env3i.tr.load_things(conf)
 
 # Load Rule Subscriptions of Things
-for th in Env3i.tr.Things:
-    print("Loaded device ", th.get_tid())
-    top = th.get_topics()
+for th in Env3i.tr.Things.keys():
+    tid=Env3i.tr.Things[th].get_tid()
+    print("Loaded device ", tid)
+    top = Env3i.tr.Things[th].get_topics()
     print("Needs ", top)
     if top is None:
         pass
     else:
-        r = RuleClass.Rule(name=th.get_tid()+":"+top, topic=top, rule_action=th)
+        r = RuleClass.Rule(name=tid+":"+top, topic=top, rule_action=Env3i.tr.Things[th])
         Env3i.rules.append(r)
 
 print(str(len(Env3i.rules)) + " topic rules added.")
