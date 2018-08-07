@@ -1,18 +1,12 @@
 # 3i
-## IoT device - [ MQTT ] -> MQTT Broker ->  MySQL database -> Device Logic Code
+## IoT device - [ MQTT ] <-> MQTT Broker <-> 3i platform <-> Device Logic Code <-> MySQL database 
 
-3i is a python based MQTT Client that saves MQTT messages to MySQL database. Rules can be configured to save messages that match a topic to a MySQL table. Data has to arrive on the MQTT messages as a JSON text string with the following format:
-
-{ "field1" : "val1", "field2" : 0, "field3" : "1/1/1" }
+3i is a python based IOT Platform with MQTT Client. It contains a ThingsRegistry, Rules Manager, Action, Database interface (MySQL), custom ThingsClasses for business logic.
 
 ## Requirements:
 
 *   paho - Python MQTT Client library
 *   PyMySQL - Python MySQL Client library
-
-## MQTT Message Listener Processing Rules
-
-Rule Name, MQTT Topic to subscribe, MySQL table name to Save data, Operation: INSERT / UPDATE, key field for update
 
 ## Configuration:
 
@@ -21,6 +15,7 @@ All config information is stored in .json files in JSON format in the conf folde
 ### MQTT Server Config:
 
 Settings saved in mqtt_config.json file are : MQTT Host Name, Port, Username, Password
+This file also contains the site wide IOT MQTT Prefix.
 
 ### Database Server Config:
 
@@ -28,7 +23,13 @@ db_config.json conntains the following settings for the MySQL server to connect 
 
 ### Rule Config:
 
-topic_config.json file contains rule definitions. Example config below:
+## MQTT Message to Direct Database Table Rules:
+
+topic_config.json file contains rule definitions. 
+
+Rule Name, MQTT Topic to subscribe, MySQL table name to Save data, Operation: INSERT / UPDATE, key field for update [update not yet supported]
+
+Example config below:
 
     {
       "TOPIC1": {
@@ -47,3 +48,7 @@ topic_config.json file contains rule definitions. Example config below:
         "INSERT" : 1
       }
     }
+
+Data has to arrive on the MQTT messages as a JSON text string with the following format:
+
+{ "field1" : "val1", "field2" : 0, "field3" : "1/1/1" }
