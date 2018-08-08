@@ -1,7 +1,8 @@
 # 3i
-## IoT device - [ MQTT ] <-> MQTT Broker <-> 3i platform <-> Device Logic Code <-> MySQL database 
+ 
+3i is a python based IOT Platform. It contains a ThingsRegistry, Rules Action, Database interface (MySQL) and MQTT Client. It supports custom ThingsClasses for business logic.
 
-3i is a python based IOT Platform with MQTT Client. It contains a ThingsRegistry, Rules Manager, Action, Database interface (MySQL), custom ThingsClasses for business logic.
+    IoT device <-> MQTT Broker <-> 3i platform <-> Device Logic Code <-> MySQL database
 
 ## Requirements:
 
