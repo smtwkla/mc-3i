@@ -3,6 +3,7 @@ import DBC as dbc
 import Rule as RuleClass
 import MQTTHandlerClass
 import Env3iClass
+import RuleRegister
 import Actions
 import Thing
 import sys
@@ -66,18 +67,19 @@ if Env3i.action_daemon_mode:
 
     logging.info("Starting in Action Rule Mode...")
 
-    # Load Direct2DB Topics List from JSON File
-    topic = read_c.read_direct2db_topic_conf(Env3i.conf_root)
+    Env3i.rr = RuleRegister.RuleRegisterClass(Env3i)
+
+    sql_fld = "3i_Rules.RuleName, 3i_Rules.RuleID, 3i_Rules.Topic, 3i_Rules.Operation, 3i_Rules.TableName, 3i_Rules.last_modified"
+    sql_where = "3i_Rules.Enabled = TRUE"
+    res = Env3i.dbc.select("3i_Rules", sql_fld, condition=sql_where, group_by=None, limit="1000")
+    rule_res = res.fetchall()
 
     # Parse Direct Table Write Action Topics to be subscribed to from JSON File and add it to RuleList[]
-    for aTopic in topic.items():
-        if aTopic[0] == "//":
-            pass  # Ignore comment in JSON file
-        else:
-            w = Actions.WriteTableActionClass(Env3i, aTopic[1]['INSERT'], aTopic[1]['TABLE'])
-            r = RuleClass.Rule(name=aTopic[0], topic=aTopic[1]['TOPIC'], rule_action=w)
-            Env3i.rules.append(r)
-
+    for aTopic in rule_res:
+        print(aTopic)
+        w = Actions.WriteTableActionClass(Env3i, aTopic['Operation'], aTopic['TableName'])
+        r = RuleClass.Rule(name=aTopic['RuleName'], topic=aTopic['Topic'], rule_action=w, time_stamp=['last_modified'])
+        Env3i.rr.add_rule(r)
 else:
     # Load Things
 
@@ -96,10 +98,10 @@ else:
             r = RuleClass.Rule(name=tid+":"+top, topic=top, rule_action=Env3i.tr.Things[th])
             Env3i.rules.append(r)
 
-logging.info(str(len(Env3i.rules)) + " topic rules added.")
+logging.info(str(len(Env3i.rr.rules)) + " topic rules added.")
 
 Env3i.mqtt = MQTTHandlerClass.MQTTHandlerClass()
-Env3i.mqtt.setRuleList(Env3i.rules)
+Env3i.mqtt.setRuleList(Env3i.rr.rules)
 Env3i.mqtt.connect_to_server(m_conf)
 Env3i.mqtt.client.loop_forever()
 

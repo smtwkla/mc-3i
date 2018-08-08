@@ -11,3 +11,4 @@ class Env3iClass:
         self.conf_root = None
         self.db_conf = ""
         self.action_daemon_mode = False
+        self.rr = None

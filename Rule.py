@@ -1,10 +1,11 @@
 import logging
 
 class Rule(object):
-    def __init__(self, name, topic, rule_action):
+    def __init__(self, name, topic, rule_action, time_stamp=None):
         self.name = name
         self.topic = topic
         self.rule_action_obj = rule_action
+        self.loaded_ts = time_stamp
 
     def getTopic(self):
         return self.topic
