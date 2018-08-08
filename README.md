@@ -21,7 +21,7 @@ This file also contains the site wide IOT MQTT Prefix.
 
 ### Database Server Config:
 
-db_config.json conntains the following settings for the MySQL server to connect to: Host, Port, Username, password, DB name
+db_config.json contains the following settings for the MySQL server to connect to: Host, Port, Username, password, DB name
 
     python 3i -d Folder_Containing_db_config.json
 
