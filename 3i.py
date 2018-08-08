@@ -69,17 +69,21 @@ if Env3i.action_daemon_mode:
 
     Env3i.rr = RuleRegister.RuleRegisterClass(Env3i)
 
-    sql_fld = "3i_Rules.RuleName, 3i_Rules.RuleID, 3i_Rules.Topic, 3i_Rules.Operation, 3i_Rules.TableName, 3i_Rules.last_modified"
+    sql_fld = "RuleName, RuleID, Topic, Operation, TableName, last_modified"
     sql_where = "3i_Rules.Enabled = TRUE"
     res = Env3i.dbc.select("3i_Rules", sql_fld, condition=sql_where, group_by=None, limit="1000")
     rule_res = res.fetchall()
 
     # Parse Direct Table Write Action Topics to be subscribed to from JSON File and add it to RuleList[]
     for aTopic in rule_res:
-        print(aTopic)
-        w = Actions.WriteTableActionClass(Env3i, aTopic['Operation'], aTopic['TableName'])
-        r = RuleClass.Rule(name=aTopic['RuleName'], topic=aTopic['Topic'], rule_action=w, time_stamp=['last_modified'])
-        Env3i.rr.add_rule(r)
+        logging.debug(aTopic)
+        if aTopic['Operation'] in (1,2):
+            w = Actions.WriteTableActionClass(Env3i, aTopic['Operation'], aTopic['TableName'])
+            r = RuleClass.Rule(name=aTopic['RuleName'], topic=aTopic['Topic'], rule_action=w, time_stamp=['last_modified'])
+            Env3i.rr.add_rule(r)
+        else:
+            logging.critical("Error: Unimplemented Action Rule Operation %s for rule %s" % (aTopic['Operation'], aTopic['RuleName']))
+            exit(1)
 else:
     # Load Things
 
