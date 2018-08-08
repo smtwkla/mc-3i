@@ -9,11 +9,17 @@
 *   paho - Python MQTT Client library
 *   PyMySQL - Python MySQL Client library
 
+## Command line parameters Syntax:
+
+    python 3i   [ -d Folder_Containing_db_config.json ] 
+                [ -c Folder_Containing_JSON_Config_files ]
+                [ MODE_ACTION ]
+                [ -L DEBUG ]
+                [ -LF logfile_path ]
+    
 ## Configuration:
 
-All config information is stored in .json files in JSON format in the conf folder. Rename the .json.sample files as .json files and make changes as necessary.
-
-    python 3i -c Folder_Containing_JSON_Config_files
+All config information is stored in .json files in JSON format in the conf folder. If path for config files is not specified, 3i looks for all config files in conf/ subdirectory. Rename the .json.sample files as .json files and make changes as necessary.
 
 ### MQTT Server Config:
 
@@ -23,8 +29,6 @@ This file also contains the site wide IOT MQTT Prefix.
 ### Database Server Config:
 
 db_config.json contains the following settings for the MySQL server to connect to: Host, Port, Username, password, DB name
-
-    python 3i -d Folder_Containing_db_config.json
 
 # Starting Modes
 
