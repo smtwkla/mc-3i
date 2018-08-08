@@ -17,7 +17,8 @@ Env3i.db_conf = "conf/"
 Env3i.conf_root = "conf/"
 
 l_filename = None
-l_level = None
+l_level = logging.INFO
+
 # Process command line arguments
 if len(sys.argv) >= 1:
     (switches, flags) = process_args(sys.argv)
