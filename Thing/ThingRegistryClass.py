@@ -35,6 +35,7 @@ class ThingRegistryClass:
 
         return
 
-    def get_thing(self, id):
+    def get_thing(self, tid):
         #  Find Thing Object
+        return self.Things[tid]
         pass

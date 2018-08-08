@@ -2,8 +2,8 @@ import json
 from os import path
 
 
-def read_mqtt_conf():
-    with open(path.relpath('conf/mqtt_config.json'), 'r') as s:
+def read_mqtt_conf(conf):
+    with open(path.relpath(conf + '/mqtt_config.json'), 'r') as s:
         config = json.load(s)
 
     mqtt_host = config['MQTT']['HOST']
@@ -14,14 +14,14 @@ def read_mqtt_conf():
             'mqtt_password': mqtt_password, 'topic_root': config['IOT_SITE']['TOPIC_ROOT']}
 
 
-def read_things_conf():
-    with open(path.relpath('conf/things_config.json'), 'r') as s:
+def read_things_conf(conf):
+    with open(path.relpath(conf + '/things_config.json'), 'r') as s:
         config = json.load(s)
 
     return config
 
 
-def read_topic_conf():
-    with open(path.relpath('conf/topic_config.json'), 'r') as s:
+def read_direct2db_topic_conf(conf):
+    with open(path.relpath(conf + '/direct2db_config.json'), 'r') as s:
         config = json.load(s)
     return config

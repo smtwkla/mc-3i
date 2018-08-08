@@ -8,3 +8,4 @@ class Env3iClass:
         self.mqtt = None
         self.rules = None
         self.topic_root = ""
+        self.conf_root = None

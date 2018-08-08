@@ -5,25 +5,30 @@ import MQTTHandlerClass
 import Env3iClass
 import Actions
 import Thing
+import sys
 
 # Create App Class
 Env3i = Env3iClass.Env3iClass()
+if len(sys.argv) >= 2:
+    Env3i.conf_root = sys.argv[1]
+else:
+    Env3i.conf_root = "conf/"
 
 # Create Database Class
-Env3i.dbc = dbc.DBConnector()
+Env3i.dbc = dbc.DBConnector(Env3i.conf_root)
 # Connect to Database
 Env3i.dbc.connect()
 
 # Load MQTT Server Config from JSON File
-m_conf = read_c.read_mqtt_conf()
+m_conf = read_c.read_mqtt_conf(Env3i.conf_root)
 
 print("MQTT Server Config:")
 print(m_conf['mqtt_host'] + ":" + str(m_conf['mqtt_port']) + " " + m_conf['mqtt_username'] + " " + m_conf['mqtt_password'] + " " + m_conf['topic_root'])
 
 Env3i.topic_root = m_conf['topic_root']
 
-# Load Topics List from JSON File
-topic = read_c.read_topic_conf()
+# Load Direct2DB Topics List from JSON File
+topic = read_c.read_direct2db_topic_conf(Env3i.conf_root)
 
 Env3i.rules = []
 
@@ -39,7 +44,7 @@ for aTopic in topic.items():
 # Load Things
 
 Env3i.tr = Thing.ThingRegistryClass(Env3i)
-conf = read_c.read_things_conf()
+conf = read_c.read_things_conf(Env3i.conf_root)
 Env3i.tr.load_things(conf)
 
 # Load Rule Subscriptions of Things

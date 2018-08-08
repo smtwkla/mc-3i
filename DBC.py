@@ -4,8 +4,8 @@ import pymysql.cursors
 import string
 
 
-def read_db_conf():
-    with open(path.relpath('conf/db_config.json'), 'r') as s:
+def read_db_conf(conf):
+    with open(path.relpath(conf + '/db_config.json'), 'r') as s:
         config = json.load(s)       # Read JSON String from config file
     return config
 
@@ -29,9 +29,9 @@ def filter_field_name(fn):
 class DBConnector(object):
     """docstring for DBConnector."""
 
-    def __init__(self):
+    def __init__(self, conf):
         super(DBConnector, self).__init__()
-        c = read_db_conf()
+        c = read_db_conf(conf)
         self.db_host = c['DB']['HOST']
         self.db_port = c['DB']['PORT']
         self.db_user = c['DB']['USER']
