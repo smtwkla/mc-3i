@@ -9,3 +9,4 @@ class Env3iClass:
         self.rules = None
         self.topic_root = ""
         self.conf_root = None
+        self.db_conf = ""

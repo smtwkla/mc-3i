@@ -6,13 +6,26 @@ import Env3iClass
 import Actions
 import Thing
 import sys
+from CmdArgParse import process_args
 
 # Create App Class
 Env3i = Env3iClass.Env3iClass()
-if len(sys.argv) >= 2:
-    Env3i.conf_root = sys.argv[1]
-else:
-    Env3i.conf_root = "conf/"
+
+# Set defaults
+Env3i.db_conf = "conf/"
+Env3i.conf_root = "conf/"
+
+# Process command line arguments
+if len(sys.argv) >= 1:
+    (switches, flags) = process_args(sys.argv)
+    for i in switches:
+        if i[0] == "-d":
+            Env3i.db_conf = i[1]
+        elif i[0] == "-c":
+            Env3i.conf_root = i[1]
+
+print("DB Conf:", Env3i.db_conf)
+print("Conf Root:", Env3i.conf_root)
 
 # Create Database Class
 Env3i.dbc = dbc.DBConnector(Env3i.conf_root)
