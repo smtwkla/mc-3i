@@ -10,3 +10,4 @@ class Env3iClass:
         self.topic_root = ""
         self.conf_root = None
         self.db_conf = ""
+        self.action_daemon_mode = False

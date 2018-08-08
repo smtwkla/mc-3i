@@ -1,5 +1,5 @@
 import Thing
-
+import logging
 
 class ThingRegistryClass:
     """ Base Class for Things Registry"""
@@ -11,7 +11,7 @@ class ThingRegistryClass:
     def load_things(self, thingslist):
         for thing in thingslist.items():
 
-            print("Processing %s : Class %s..." % (thing[1]["TID"], thing[1]["CLASS"]))
+            logging.info("Processing %s : Class %s..." % (thing[1]["TID"], thing[1]["CLASS"]))
 
             thing_class = thing[1]["CLASS"]
             tid = thing[1]["TID"]
@@ -27,7 +27,7 @@ class ThingRegistryClass:
                 obj = Thing.ThingClass(tid, self.env)
 
             if obj is None:
-                print("Error : Unknown Class %s." % thing_class)
+                logging.error("Error : Unknown Class %s." % thing_class)
 
             else:
                 # Append Thing to Things list

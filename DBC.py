@@ -2,7 +2,7 @@ import json
 from os import path
 import pymysql.cursors
 import string
-
+import logging
 
 def read_db_conf(conf):
     with open(path.relpath(conf + '/db_config.json'), 'r') as s:
@@ -40,7 +40,7 @@ class DBConnector(object):
         self.connection = None
 
     def connect(self):
-        print("Connecting to database " + self.db_host + ":" + str(self.db_port))
+        logging.info("Connecting to database " + self.db_host + ":" + str(self.db_port))
         # Connect to the database
         self.connection = pymysql.connect(host=self.db_host,
                                           user=self.db_user,
@@ -63,7 +63,7 @@ class DBConnector(object):
 
             if field != aField or field == "":
                 # Field name in record contains illegal characters.
-                print("Field name contains illegal characters %s or is empty." % aField)
+                logging.error("Field name contains illegal characters %s or is empty." % aField)
                 return False    # Terminate action
 
             sField += "" + field + ","
@@ -81,7 +81,7 @@ class DBConnector(object):
 
         # Create a new record
         sql = "INSERT INTO " + table + " (" + sField + ") VALUES (" + sRef + ")"
-        print(sql)  # Debug output
+        logging.debug(sql)  # Debug output
 
         with self.connection.cursor() as cursor:
             try:
@@ -89,7 +89,7 @@ class DBConnector(object):
                 self.connection.commit()
 
             except (pymysql.err.InternalError, pymysql.err.ProgrammingError) as er:
-                print("Error: {0}".format(er))
+                logging.error("Error: {0}".format(er))
                 return False
 
             else:
@@ -104,7 +104,7 @@ class DBConnector(object):
 
             if field != aField or field == "":
                 # Field name in record contains illegal characters.
-                print("Field name contains illegal characters %s or is empty." % aField)
+                logging.error("Field name contains illegal characters %s or is empty." % aField)
                 return False  # Terminate action
 
             sField += "" + field + "="
@@ -119,7 +119,7 @@ class DBConnector(object):
 
         sField = sField[:-1]  # Remove the extra ,
         sql = "UPDATE " + table + " SET " + sField + " WHERE " + condition
-        print(sql)
+        logging.debug(sql)
 
         with self.connection.cursor() as cursor:
             try:
@@ -127,7 +127,7 @@ class DBConnector(object):
                 self.connection.commit()
 
             except pymysql.err.Error as er:
-                print("Error: {0}".format(er))
+                logging.error("Error: {0}".format(er))
                 return False
 
             else:
@@ -136,7 +136,7 @@ class DBConnector(object):
     def delete(self, table, condition):
 
         sql = "DELETE FROM " + table + " WHERE " + condition
-        print(sql)
+        logging.debug(sql)
 
         with self.connection.cursor() as cursor:
             try:
@@ -144,7 +144,7 @@ class DBConnector(object):
                 self.connection.commit()
 
             except pymysql.err.Error as er:
-                print("Error: {0}".format(er))
+                logging.error("Error: {0}".format(er))
                 return False
 
             else:
@@ -162,12 +162,12 @@ class DBConnector(object):
         if limit is not None:
             sql += " LIMIT " + limit
 
-        print(sql)
+        logging.debug(sql)
 
         cursor = self.connection.cursor()
         try:
             cursor.execute(sql)
             return cursor
         except pymysql.err.Error as er:
-            print("Error: {0}".format(er))
+            logging.error("Error: {0}".format(er))
             return None

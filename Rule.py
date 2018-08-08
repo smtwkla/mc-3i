@@ -1,4 +1,4 @@
-
+import logging
 
 class Rule(object):
     def __init__(self, name, topic, rule_action):
@@ -11,7 +11,7 @@ class Rule(object):
 
     def message_in(self, msg):
         # Process incoming MQTT Message
-        print("Message arrived to Rule " + self.name + " topic " + msg.topic + " " + str(msg.payload))
+        logging.debug("Message arrived to Rule " + self.name + " topic " + msg.topic + " " + str(msg.payload))
         self.rule_action_obj.on_message(msg)
         return True
 

@@ -1,6 +1,6 @@
 import Actions
 import json as js
-
+import logging
 
 class WriteTableActionClass(Actions.RuleActionClass):
 
@@ -12,10 +12,8 @@ class WriteTableActionClass(Actions.RuleActionClass):
     def on_message(self, msg):
         # decode JSON payload
         pl = msg.payload.decode("utf-8")
-        print("Payload:  ")
-        print(pl)
+        logging.debug("Payload:  " + pl)
         jss = js.loads(pl)
-        print(jss)
 
         if self.insert:
             # INSERT SQL Statement

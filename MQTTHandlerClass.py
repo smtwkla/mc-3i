@@ -1,5 +1,5 @@
 import paho.mqtt.client as mqtt
-
+import logging
 
 class MQTTHandlerClass(object):
     def __init__(self):
@@ -25,7 +25,7 @@ class MQTTHandlerClass(object):
         self.client.connect(conf['mqtt_host'], conf['mqtt_port'], 60)
 
     def on_connect(self, client, userdata, flags,rc):
-        print("Connected with result code "+str(rc))
+        logging.info("Connected with result code "+str(rc))
     # Subscribe to all rule topics defined in RuleList
         for aRule in self.RuleList:
             client.subscribe(aRule.getTopic())
