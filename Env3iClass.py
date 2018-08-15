@@ -12,3 +12,7 @@ class Env3iClass:
         self.db_conf = ""
         self.action_daemon_mode = False
         self.rr = None
+
+    def quit_err(self):
+        exit(1)
+
