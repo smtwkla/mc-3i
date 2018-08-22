@@ -1,4 +1,5 @@
 import Thing
+import logging
 from ShadowEngine import ShadowEngineClass
 
 
@@ -20,37 +21,50 @@ class LiftThingClass(Thing.ThingClass):
         print("Lift " + self.get_tid() + " sent message: " + pl)
 
         data = pl.split()
-        ts = data[0]
-        msg = data[1].upper()
+
+        if len(data) == 0:
+            logging.critical(f"Lift {self.get_tid()} received no message body.")
+            return
+
         tid = self.get_tid()
         i_val = 0
         s_val = ""
         f_val = 0.0
 
-        if msg == "UP":
-            f_val = data[2]
+        try:
 
-        elif msg == "DOWN":
-            f_val = data[2]
+            ts = data[0]
+            msg = data[1].upper()
 
-        elif msg == "OLR_TRIP":
-            shadow = "Status"
-            shadow_t = ShadowEngineClass.SHADOW_TYPE_STR
-            shadow_s = "TRIP"
-            self.env.se.update_shadow(tid, shadow, shadow_t, shadow_s)
+            if msg == "UP":
+                f_val = float(data[2])
 
-        elif msg == "OLR_RESET":
-            shadow = "Status"
-            shadow_t = ShadowEngineClass.SHADOW_TYPE_STR
-            shadow_s = "Ok"
-            self.env.se.update_shadow(tid, shadow, shadow_t, shadow_s)
+            elif msg == "DOWN":
+                f_val = float(data[2])
 
-        table = self.def_table
+            elif msg == "OLR_TRIP":
+                shadow = "Status"
+                shadow_t = ShadowEngineClass.SHADOW_TYPE_STR
+                shadow_s = "TRIP"
+                self.env.se.update_shadow(tid, shadow, shadow_t, shadow_s)
 
-        record = {"tid": tid, "event_time": ts, "event_type": msg, "event_data_i": i_val, "event_data_s": s_val, \
-                  "event_data_f": f_val}
+            elif msg == "OLR_RESET":
+                shadow = "Status"
+                shadow_t = ShadowEngineClass.SHADOW_TYPE_STR
+                shadow_s = "Ok"
+                self.env.se.update_shadow(tid, shadow, shadow_t, shadow_s)
 
-        self.env.dbc.insert(table, record)
+        except IndexError:
+            logging.critical(f"Lift {self.get_tid()} received invalid number of arguments in message.")
+
+        else:
+
+            table = self.def_table
+
+            record = {"tid": tid, "event_time": ts, "event_type": msg, "event_data_i": i_val, "event_data_s": s_val, \
+                      "event_data_f": f_val}
+
+            self.env.dbc.insert(table, record)
 
         return
 

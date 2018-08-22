@@ -26,6 +26,7 @@ msg = testmsg()
 d = datetime.datetime.now()
 tim = 5.5
 cmd="UP"
+print(d.isoformat())
 
 msg.payload = f'{d.isoformat()} {cmd} {tim}'.encode("utf-8")
 lc.on_message(msg)
