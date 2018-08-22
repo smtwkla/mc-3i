@@ -23,6 +23,9 @@ class ThingRegistryClass:
             elif thing_class == "SAPK_ThingClass":
                 obj = Thing.ThingClass(tid, self.env)
 
+            elif thing_class == "Lift":
+                obj = Thing.LiftThingClass(tid, self.env)
+
             elif thing_class == "ThingClass":
                 obj = Thing.ThingClass(tid, self.env)
 

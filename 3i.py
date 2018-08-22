@@ -4,6 +4,8 @@ import Rule as RuleClass
 import MQTTHandlerClass
 import Env3iClass
 import RuleRegister
+import ShadowEngine
+
 import Thing
 import sys
 from CmdArgParse import process_args
@@ -62,11 +64,12 @@ logging.info("MQTT Server Config: " + m_conf['mqtt_host'] + ":" + str(m_conf['mq
 Env3i.topic_root = m_conf['topic_root']
 Env3i.rules = []
 
+Env3i.rr = RuleRegister.RuleRegisterClass(Env3i)
+
 if Env3i.action_daemon_mode:
 
     logging.info("Starting in Action Rule Mode...")
 
-    Env3i.rr = RuleRegister.RuleRegisterClass(Env3i)
     Env3i.rr.load_rules_table()
 
 else:
@@ -80,14 +83,16 @@ else:
     for th in Env3i.tr.Things.keys():
         tid = Env3i.tr.Things[th].get_tid()
         top = Env3i.tr.Things[th].get_topics()
-        logging.info("Loaded device " + tid  + ", needs ", top)
+        logging.info(f'Loaded device {tid}, needs {top}')
         if top is None:
             pass
         else:
             r = RuleClass.Rule(name=tid+":"+top, topic=top, rule_action=Env3i.tr.Things[th])
-            Env3i.rules.append(r)
+            Env3i.rr.add_rule(r)
 
-logging.info(str(len(Env3i.rr.rules)) + " topic rules added.")
+logging.info(f'{str(len(Env3i.rr.rules))} topic rules added.')
+
+# Env3i.se = ShadowEngine.ShadowEngineClass(Env3i)
 
 Env3i.mqtt = MQTTHandlerClass.MQTTHandlerClass()
 Env3i.mqtt.setRuleList(Env3i.rr.rules)
