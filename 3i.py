@@ -5,6 +5,7 @@ import MQTTHandlerClass
 import Env3iClass
 import RuleRegister
 import ShadowEngine
+import time
 
 import Thing
 import sys
@@ -61,7 +62,6 @@ m_conf = read_c.read_mqtt_conf(Env3i.conf_root)
 
 logging.info("MQTT Server Config: " + m_conf['mqtt_host'] + ":" + str(m_conf['mqtt_port']) + " " + m_conf['mqtt_username'] + " " + m_conf['mqtt_password'] + " " + m_conf['topic_root'])
 
-Env3i.topic_root = m_conf['topic_root']
 Env3i.rules = []
 
 Env3i.rr = RuleRegister.RuleRegisterClass(Env3i)
@@ -94,9 +94,19 @@ logging.info(f'{str(len(Env3i.rr.rules))} topic rules added.')
 
 # Env3i.se = ShadowEngine.ShadowEngineClass(Env3i)
 
-Env3i.mqtt = MQTTHandlerClass.MQTTHandlerClass()
+Env3i.mqtt = MQTTHandlerClass.MQTTHandlerClass(Env3i)
 Env3i.mqtt.setRuleList(Env3i.rr.rules)
 Env3i.mqtt.connect_to_server(m_conf)
-Env3i.mqtt.client.loop_forever()
+
+i = 0
+
+while True:
+    Env3i.mqtt.client.loop()
+    time.sleep(0.25)
+    i = i + 1
+    if i > 1000:
+        Env3i.dbc.ping(True)
+        i = 0
+
 
 

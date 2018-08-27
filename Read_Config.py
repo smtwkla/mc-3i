@@ -10,8 +10,11 @@ def read_mqtt_conf(conf):
     mqtt_port = config['MQTT']['PORT']
     mqtt_username = config['MQTT']['USER']
     mqtt_password = config['MQTT']['PASS']
+    mqtt_topic_root = config['IOT_SITE']['TOPIC_ROOT']
+    mqtt_client_id = config['IOT_SITE']['CLIENT_ID']
+
     return {'mqtt_host': mqtt_host, 'mqtt_port': mqtt_port, 'mqtt_username': mqtt_username,
-            'mqtt_password': mqtt_password, 'topic_root': config['IOT_SITE']['TOPIC_ROOT']}
+            'mqtt_password': mqtt_password, 'topic_root': mqtt_topic_root, 'client_id': mqtt_client_id}
 
 
 def read_things_conf(conf):

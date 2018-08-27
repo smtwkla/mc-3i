@@ -2,18 +2,21 @@ import paho.mqtt.client as mqtt
 import logging
 
 class MQTTHandlerClass(object):
-    def __init__(self):
+    def __init__(self, env):
         self.client = None
         self.conf = None
+        self.env = env
         super(MQTTHandlerClass, self).__init__()
 
     def setRuleList(self, rl):
         self.RuleList = rl
 
     def connect_to_server(self, conf):
-        # MQTT paho Client
-        self.client = mqtt.Client()
         self.conf = conf
+
+        # MQTT paho Client
+        self.client = mqtt.Client(client_id=conf.client_id, clean_session=False)
+
 
         if conf['mqtt_username'] != '':
             self.client.username_pw_set(conf['mqtt_username'], conf['mqtt_password'])

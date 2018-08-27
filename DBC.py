@@ -53,6 +53,8 @@ class DBConnector(object):
     def insert(self, table, record):
         # Insert New Record into table
 
+        self.ping()
+
         # Build Field, Value string
         sField = ""
         sVal = ""
@@ -97,6 +99,8 @@ class DBConnector(object):
 
     def update(self, table, record, condition):
 
+        self.ping()
+
         sField = ""
 
         for aField in record.keys():
@@ -135,6 +139,8 @@ class DBConnector(object):
 
     def delete(self, table, condition):
 
+        self.ping()
+
         sql = "DELETE FROM " + table + " WHERE " + condition
         logging.debug(sql)
 
@@ -151,6 +157,8 @@ class DBConnector(object):
                 return True
 
     def select(self, table, fields, condition=None, order_by=None, group_by=None, limit=None):
+
+        self.ping()
 
         sql = "SELECT " + fields + " FROM " + table
         if condition is not None:
@@ -171,3 +179,7 @@ class DBConnector(object):
         except pymysql.err.Error as er:
             logging.error("Error: {0}".format(er))
             return None
+
+    def ping(self, recon):
+        if __name__ == '__main__':
+            self.connection.ping(recon)
