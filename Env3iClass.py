@@ -11,6 +11,7 @@ class Env3iClass:
         self.action_daemon_mode = False
         self.rr = None
         self.se = ShadowEngine.ShadowEngineClass(self)
+        self.topic_root = ""
 
     def quit_err(self):
         exit(1)
