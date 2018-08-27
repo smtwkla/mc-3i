@@ -180,6 +180,6 @@ class DBConnector(object):
             logging.error("Error: {0}".format(er))
             return None
 
-    def ping(self, recon):
+    def ping(self, recon=True):
         if __name__ == '__main__':
             self.connection.ping(recon)

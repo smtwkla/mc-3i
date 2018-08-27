@@ -34,7 +34,7 @@ if len(sys.argv) >= 1:
             if i[1].strip().upper() == "DEBUG":
                 l_level = logging.DEBUG
         elif i[0] == "-LF":
-            l_filename = i[1]
+            l_filename = i[1].strip()
         else:
             logging.critical("Error : Unknown command line switch " + i[0])
             Env3i.quit_err()
