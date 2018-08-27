@@ -15,8 +15,7 @@ class MQTTHandlerClass(object):
         self.conf = conf
 
         # MQTT paho Client
-        self.client = mqtt.Client(client_id=conf.client_id, clean_session=False)
-
+        self.client = mqtt.Client(client_id=conf['client_id'], clean_session=False)
 
         if conf['mqtt_username'] != '':
             self.client.username_pw_set(conf['mqtt_username'], conf['mqtt_password'])

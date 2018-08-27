@@ -60,7 +60,9 @@ Env3i.dbc.connect()
 # Load MQTT Server Config from JSON File
 m_conf = read_c.read_mqtt_conf(Env3i.conf_root)
 
-logging.info("MQTT Server Config: " + m_conf['mqtt_host'] + ":" + str(m_conf['mqtt_port']) + " " + m_conf['mqtt_username'] + " " + m_conf['mqtt_password'] + " " + m_conf['topic_root'])
+logging.info("MQTT Server Config: " + m_conf['mqtt_host'] + ":" + str(m_conf['mqtt_port']) + " " + \
+             m_conf['mqtt_username'] + " " + m_conf['mqtt_password'] + " " + m_conf['topic_root'] + \
+             " " + m_conf['client_id'])
 
 Env3i.rules = []
 Env3i.topic_root = m_conf['topic_root']
