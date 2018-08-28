@@ -181,5 +181,4 @@ class DBConnector(object):
             return None
 
     def ping(self, recon=True):
-        if __name__ == '__main__':
-            self.connection.ping(recon)
+        self.connection.ping(recon)
