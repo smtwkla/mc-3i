@@ -2,7 +2,7 @@
  
 3i is a python based IOT Platform. It contains of modules iot-3i, mc-3i, daq-3i and web-3i.
 
-mc-3i is a machine model controller for digital replica management. It gets data from sources and upates the digital model. It has a ThingsRegistry, Rules Action, Database interface (MySQL) and MQTT Client. It supports custom ThingsClasses for business logic.
+mc-3i is a model controller for digital replica management. It gets data from sources and upates the digital model. It has a ThingsRegistry, Rules Action, Database interface (MySQL) and MQTT Client. It supports custom ThingsClasses for business logic.
 
     IoT device <-> MQTT Broker <-> mc-3i platform <-> Device Logic Code <-> MySQL database
 
